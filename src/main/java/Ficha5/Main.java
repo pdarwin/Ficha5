@@ -19,7 +19,7 @@ public class Main {
 		
 		System.out.println(mercado.getSaldoTotal());
 		
-		System.out.println(mercado.toString());
+		System.out.println(mercado);
 
 	}
 

@@ -16,10 +16,24 @@ public class LoadFromFile {
 	public List<Pessoa> obterInformacaoFicheiro(String fileName)
 	{
 		
-		return convertStringToPessoa(
-				getFileContent(
-						getFileAsIOStream(fileName)));
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 		
+		try 
+		{
+			InputStream iStream = getFileAsIOStream(fileName);
+			
+			String fileContents = getFileContent(iStream);
+			
+			pessoas = convertStringToPessoa(fileContents);
+			
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e);
+		}
+		
+		return pessoas;
+				
 	}
 	
 	private InputStream getFileAsIOStream(String fileName)
@@ -70,10 +84,21 @@ public class LoadFromFile {
 		
 		for (int i = 0; i < jArray.length() ; i++)
 		{
+			
 			Pessoa pessoa = new Pessoa(
 						jArray.getJSONObject(i).getString("Primeiro_nome"),
 						jArray.getJSONObject(i).getString("Ultimo_nome"), 
 						jArray.getJSONObject(i).getInt("Idade"));
+			
+			try 
+			{
+				pessoa.setSaldo(jArray.getJSONObject(i).getDouble("Saldo"));	
+			} 
+			catch (Exception e) 
+			{
+				// Faz nada	
+			}
+			
 			pessoas.add(pessoa);
 			
 		}
